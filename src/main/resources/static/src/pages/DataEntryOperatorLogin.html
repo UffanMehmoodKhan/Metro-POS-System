@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Operator Login Screen</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- page -->
+    <main class="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
+        <!-- component -->
+        <section class="flex w-[30rem] flex-col space-y-10">
+            <div class="text-center text-4xl font-medium">Data Entry Operator Portal</div>
+
+            
+            <!-- Email input (increased width) -->
+            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+                <input id="dataEntryUsername" type="text" placeholder="Enter Your Username"
+                    class="w-96 border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+            </div>
+
+            <!-- Password input (increased width) -->
+            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+                <input id="dataEntryPassword" type="password" placeholder="Enter Your Password"
+                    class="w-96 border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+            </div>
+            <!-- 4 digit branch-ID  -->
+            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+                <input  id="dataEntrySecurityCode" type="password" placeholder="Enter your (4-digit) Security-Code"
+                    class="w-96 border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+            </div>
+
+            <button id="DataEntrylgnBtn"
+             class="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400">
+                LOG IN
+            </button>
+            <a href="#" class="transform text-center font-semibold text-gray-500 duration-300 hover:text-gray-300">FORGOT
+                PASSWORD?</a>
+           
+        </section>
+    </main>
+
+    <script src="/src/scripts/route.js"></script>
+    <script src="/src/scripts/navigation.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Selection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Page -->
+    <main class="flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
+        <!-- Content Container -->
+        <div class="text-center">
+            <!-- Heading: Welcome to Cashlytic -->
+            <h1 class="text-4xl font-bold mb-4">Welcome to Cashlytic</h1>
+            
+            <!-- Subheading: Login as -->
+            <h2 class="text-2xl font italic mb-8">Login as</h2>
+            
+            <!-- Button Grid -->
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Super Admin Button -->
+                <button id="superAdminButton"
+                    class="rounded-lg border-2 border-white bg-gray-900 px-8 py-4 text-lg font-semibold transition duration-300 hover:bg-white hover:text-gray-900">
+                    Super Admin
+                </button>
+                <!-- Cashier Button -->
+                <button id="cashierButton"
+                    class="rounded-lg border-2 border-white bg-gray-900 px-8 py-4 text-lg font-semibold transition duration-300 hover:bg-white hover:text-gray-900">
+                    Cashier
+                </button>
+                <!-- Data Entry Operator Button -->
+                <button id="dataEntryButton"
+                    class="rounded-lg border-2 border-white bg-gray-900 px-8 py-4 text-lg font-semibold transition duration-300 hover:bg-white hover:text-gray-900">
+                    Data Entry Operator
+                </button>
+                <!-- Branch Manager Button -->
+                <button id="branchManagerButton"
+                    class="rounded-lg border-2 border-white bg-gray-900 px-8 py-4 text-lg font-semibold transition duration-300 hover:bg-white hover:text-gray-900">
+                    Branch Manager
+                </button>
+            </div>
+        </div>
+    </main>
+    <script src="/src/scripts/route.js"></script>
+    <script src="/src/scripts/navigation.js"></script>
+
+</body>
+
+</html>
