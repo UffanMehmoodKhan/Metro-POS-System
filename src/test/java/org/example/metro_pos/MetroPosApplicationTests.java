@@ -8,6 +8,7 @@ class MetroPosApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
