@@ -1,6 +1,7 @@
-package org.example.metro_pos.Controllers.Session;
+package org.example.metro_pos.Session;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,5 +43,6 @@ public class MetroPosController {
 
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
+
 
 }
