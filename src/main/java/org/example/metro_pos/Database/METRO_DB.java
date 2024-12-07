@@ -51,7 +51,7 @@ public class METRO_DB {
     // Validate Admin Login
     public boolean validateAdmin(String username, String password, String securityCode) {
         try {
-            String query = "SELECT * FROM SuperAdmin WHERE name = ? AND password = ? AND admin_id = ?";
+            String query = "SELECT * FROM SuperAdmin WHERE name = ? AND password = ? AND security_pass = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
