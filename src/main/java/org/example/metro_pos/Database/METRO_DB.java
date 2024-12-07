@@ -147,17 +147,17 @@ public class METRO_DB {
     }
 }
 
-class Main {
-
-    public static void main(String[] args) throws SQLException {
-        METRO_DB metro_db = METRO_DB.getInstance();
-        metro_db.getCashier();
-        metro_db.getBranchManager();
-        metro_db.getSuperAdmin();
-        metro_db.getDataOperator();
-
-    }
-}
+//class Main {
+//
+//    public static void main(String[] args) throws SQLException {
+//        METRO_DB metro_db = METRO_DB.getInstance();
+//        metro_db.getCashier();
+//        metro_db.getBranchManager();
+//        metro_db.getSuperAdmin();
+//        metro_db.getDataOperator();
+//
+//    }
+//}
 
 
 

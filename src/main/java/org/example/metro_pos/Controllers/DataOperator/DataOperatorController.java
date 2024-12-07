@@ -24,4 +24,15 @@ public class DataOperatorController {
 
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
+
+    @RequestMapping("/DataEntryOperatorDashboard.html")
+    public ResponseEntity<String> DataOperatorDashboard() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/DataEntryOperatorDashboard.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
 }

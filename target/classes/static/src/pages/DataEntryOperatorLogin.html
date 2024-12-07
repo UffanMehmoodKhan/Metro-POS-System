@@ -42,9 +42,49 @@
            
         </section>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.pathname.includes('DataEntryOperatorLogin.html')) {
+                async function login() {
+                    try {
+                        const username = document.getElementById('dataEntryUsername').value;
+                        const password = document.getElementById('dataEntryPassword').value;
+                        const securityCode = document.getElementById('dataEntrySecurityCode').value;
 
-    <script src="/src/scripts/route.js"></script>
-    <script src="/src/scripts/navigation.js"></script>
+                        console.log('Sending login request with:', { username, password, securityCode});
+
+                        const response = await fetch('/api/dataOperator/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ username, password, securityCode})
+                        });
+
+
+                        console.log('Received response:', response);
+
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        const result = await response.json();
+                        console.log('Parsed response JSON:', result);
+
+                        if (result.loginSuccess) {
+                            window.location.href = '/DataEntryOperatorDashboard.html';
+                        } else {
+                            alert('Invalid credentials! Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Error while logging in:', error);
+                    }
+                }
+
+                document.getElementById('DataEntrylgnBtn').addEventListener('click', login);
+            }
+        });
+    </script>
 
 
 </body>

@@ -24,4 +24,15 @@ public class BranchManagerController {
 
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
+
+    @RequestMapping("/BranchManagerDashboard.html")
+    public ResponseEntity<String> BranchManagerDashboard() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/BranchManagerDashboard.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
 }
