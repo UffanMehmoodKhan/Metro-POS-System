@@ -328,6 +328,50 @@
             alert('An error occurred. Please try again later.');
         }
     });
+
+    confirmBillBtn.addEventListener('click', async () => {
+        const productRows = document.querySelectorAll('#productTableBody tr');
+        const transactionDetails = [];
+
+
+
+        productRows.forEach(row => {
+            const productCode = row.cells[0].textContent;
+            const productName = row.cells[1].textContent;
+            const category = row.cells[2].textContent;
+            const price = parseFloat(row.cells[3].textContent);
+            const quantity = parseInt(row.cells[4].textContent);
+
+            transactionDetails.push({
+                productCode,
+                productName,
+                category,
+                price,
+                quantity
+            });
+        });
+
+        try {
+            const response = await fetch('/api/cashier/transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ transactionDetails })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            alert('Bill confirmed and transaction recorded!');
+            billModal.classList.add('hidden');
+            document.getElementById('productTableBody').innerHTML = ''; // Clear the product table
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

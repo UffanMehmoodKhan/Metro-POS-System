@@ -11,7 +11,6 @@ public class Session implements Serializable {
 
     private String username;
     private String password;
-    private String emp_no;
     private String branchID;
     private String role;
 
@@ -21,7 +20,6 @@ public class Session implements Serializable {
     public Session(String username, String password, String branchID) {
         this.username = username;
         this.password = password;
-        this.emp_no = emp_no;
         this.branchID = branchID;
         this.role = role;
     }
@@ -49,14 +47,6 @@ public class Session implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmp_no() {
-        return emp_no;
-    }
-
-    public void setEmp_no(String emp_no) {
-        this.emp_no = emp_no;
     }
 
     public String getBranchID() {
