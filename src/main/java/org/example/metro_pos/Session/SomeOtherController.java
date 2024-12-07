@@ -15,7 +15,7 @@ public class SomeOtherController {
         Session userSession = (Session) session.getAttribute("userSession");
         if (userSession != null) {
             // Use the session information
-            return "User: " + userSession.getUsername() + ", Role: " + userSession.getRole();
+            return "User: " + userSession.getUsername() + ", Password: " + userSession.getPassword() + "";
         } else {
             return "No user session found";
         }

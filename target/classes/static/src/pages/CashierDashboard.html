@@ -1,12 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Odin Links and Images</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier Dashboard Screen</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
 
-<body>
-<h1>About Page</h1>
-<img src="https://profile-images.xing.com/images/3c013078801fec3a5798b6f2320fc059-2/hamail-khan.1024x1024.jpg" alt="hamail">
+<body class="bg-gray-50 text-gray-900 antialiased">
+<!-- Main Container -->
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col justify-between shadow-2xl transition-all duration-300">
+        <!-- Navigation Links -->
+        <div class="p-6">
+            <div class="flex items-center mb-8 space-x-3">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h2 class="text-xl font-bold text-white">CashLytic</h2>
+            </div>
+            <nav class="space-y-2">
+                <!-- Navigation Buttons -->
+                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gray-800 hover:bg-gray-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </button>
+            </nav>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="p-6 mt-auto">
+            <button id="SuperAdminlogoutbtn" class="flex items-center gap-4 w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-medium hover:bg-red-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+                Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 bg-gray-100">
+        <header class="mb-8 flex items-center justify-between bg-white p-6 rounded-xl shadow-md border-b-4 border-gray-900">
+            <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+                Cashier Dashboard
+            </h1>
+            <!-- Add item and generate bill -->
+            <div class="flex items-center gap-2"> <!-- Reduced gap to gap-2 -->
+                <!-- Add item -->
+                <button id="item" class="flex items-center gap-3 rounded-lg bg-gradient-to-r from-green-800 to-green-800 px-5 py-3 text-sm font-medium text-white hover:from-green-700 hover:to-green-600 hover:shadow-xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-green-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Add Product
+                </button>
+                <!-- Generate bill button -->
+                <button id="generateBillBtn" class="flex items-center gap-3 rounded-lg bg-gradient-to-r from-blue-900 to-blue-900 px-5 py-3 text-sm font-medium text-white hover:from-blue-700 hover:to-blue-300 hover:shadow-xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12V6m0 12v-6m5 5l5-5m-5 5l-5-5m8 2h-3m-6 0h-3M4 7h16" />
+                    </svg>
+                    Generate Bill
+                </button>
+            </div>
+
+            <!-- Bill Modal -->
+            <div id="billModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+                <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-3xl transform transition-all duration-300 scale-95 hover:scale-100">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Bill Details</h2>
+                    <table id="billTable" class="w-full text-md bg-white rounded-xl overflow-hidden">
+                        <thead class="bg-gradient-to-r from-bg-gray-900 bg-gray-900">
+                        <tr>
+                            <th class="text-left p-4 px-5 text-white font-semibold">Product Code</th>
+                            <th class="text-left p-4 px-5 text-white font-semibold">Product Name</th>
+                            <th class="text-left p-4 px-5 text-white font-semibold">Category</th>
+                            <th class="text-left p-4 px-5 text-white font-semibold">Price</th>
+                            <th class="text-left p-4 px-5 text-white font-semibold">Quantity</th>
+                            <th class="text-left p-4 px-5 text-white font-semibold">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody id="billTableBody">
+                        <!-- Dynamic rows will be added here -->
+                        </tbody>
+                    </table>
+                    <div class="text-right mt-6">
+                        <h3 class="text-2xl font-bold">Total Price: $<span id="totalPrice">0.00</span></h3>
+                    </div>
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="closeBillBtn" class="bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300 shadow-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Close</button>
+                        <button type="button" id="confirmBillBtn" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 shadow-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-300">Confirm</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+
+        <!-- Add Product Modal -->
+        <div id="addProductModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+            <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-3xl transform transition-all duration-300 scale-95 hover:scale-100">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Add New Product</h2>
+                <form id="addProductForm" class="space-y-6">
+                    <!-- Product Details -->
+                    <div class="space-y-4">
+                        <input type="text" id="product_code" placeholder="Enter Product Barcode" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none transition duration-300">
+                    </div>
+
+                    <!-- Modal Buttons -->
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancelProductBtn" class="bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300 shadow-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancel</button>
+                        <button type="submit" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 shadow-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-300">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--product table initial structure-->
+        <div class="p-4">
+            <h1 class="text-2xl font-bold mb-4 flex items-center gap-3">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                </svg>
+                Products
+            </h1>
+            <div class="overflow-auto rounded-xl shadow-lg">
+                <table id="productTable" class="w-full text-md bg-white rounded-xl overflow-hidden">
+                    <thead class="bg-gradient-to-r from-bg-gray-900 bg-gray-900">
+                    <tr>
+                        <th class="text-left p-4 px-5 text-white font-semibold">Product Code</th>
+                        <th class="text-left p-4 px-5 text-white font-semibold">Product Name</th>
+                        <th class="text-left p-4 px-5 text-white font-semibold">Category</th>
+                        <th class="text-left p-4 px-5 text-white font-semibold">Price</th>
+                        <th class="text-left p-4 px-5 text-white font-semibold">Quantity</th>
+                        <th class="text-left p-4 px-5 text-white font-semibold">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                    <!-- Dynamic rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Logout button
+    document.getElementById('SuperAdminlogoutbtn').addEventListener('click', () => {
+        window.location.href = '/LoginTypeScreen.html';
+    });
+
+    // Add Product Modal
+    const addProductModal = document.getElementById('addProductModal');
+    const addProductBtn = document.getElementById('item');
+    const cancelProductBtn = document.getElementById('cancelProductBtn');
+
+    addProductBtn.addEventListener('click', () => {
+        addProductModal.classList.remove('hidden');
+    });
+
+    cancelProductBtn.addEventListener('click', () => {
+        addProductModal.classList.add('hidden');
+    });
+
+    // Add Product Form
+    const addProductForm = document.getElementById('addProductForm');
+    addProductForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        addProductModal.classList.add('hidden');
+
+        const productTableBody = document.getElementById('productTableBody');
+        const product_code = document.getElementById('product_code').value;
+
+        try {
+            const response = await fetch('/api/cashier/find', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productBarCode: product_code })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const product = await response.json();
+
+            const productRow = document.createElement('tr');
+            productRow.innerHTML = `
+            <td class="p-4 px-5">${product.productId}</td>
+            <td class="p-4 px-5">${product.name}</td>
+            <td class="p-4 px-5">${product.category}</td>
+            <td class="p-4 px-5">${product.salePrice}</td>
+            <td class="p-4 px-5">1</td>
+            <td class="p-4 px-5">
+                <button class="edit-btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">Edit</button>
+                <button class="delete-btn bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all duration-300">Delete</button>
+            </td>
+        `;
+            productTableBody.appendChild(productRow);
+
+            // Add event listeners for edit and delete buttons
+            productRow.querySelector('.edit-btn').addEventListener('click', () => editProduct(productRow, product));
+            productRow.querySelector('.delete-btn').addEventListener('click', () => deleteProduct(productRow));
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('An error occurred. Please try again later.');
+        }
+
+        // Reset the form
+        addProductForm.reset();
+    });
+
+    function editProduct(row, product) {
+        const newName = prompt('Enter new product name:', product.name);
+        const newCategory = prompt('Enter new category:', product.category);
+        const newPrice = prompt('Enter new price:', product.salePrice);
+
+        if (newName && newCategory && newPrice) {
+            row.cells[1].textContent = newName;
+            row.cells[2].textContent = newCategory;
+            row.cells[3].textContent = newPrice;
+        }
+    }
+
+    function deleteProduct(row) {
+        if (confirm('Are you sure you want to delete this product?')) {
+            row.remove();
+        }
+    };
+
+    // Generate Bill Button
+    const generateBillBtn = document.getElementById('generateBillBtn');
+    const billModal = document.getElementById('billModal');
+    const closeBillBtn = document.getElementById('closeBillBtn');
+    const confirmBillBtn = document.getElementById('confirmBillBtn');
+    const billTableBody = document.getElementById('billTableBody');
+    const totalPriceElement = document.getElementById('totalPrice');
+
+    generateBillBtn.addEventListener('click', () => {
+        billTableBody.innerHTML = '';
+        let totalPrice = 0;
+
+        const productRows = document.querySelectorAll('#productTableBody tr');
+        productRows.forEach(row => {
+            const productCode = row.cells[0].textContent;
+            const productName = row.cells[1].textContent;
+            const category = row.cells[2].textContent;
+            const price = parseFloat(row.cells[3].textContent);
+            const quantity = parseInt(row.cells[4].textContent);
+            const total = price * quantity;
+
+            totalPrice += total;
+
+            const billRow = `
+            <tr>
+                <td class="p-4 px-5">${productCode}</td>
+                <td class="p-4 px-5">${productName}</td>
+                <td class="p-4 px-5">${category}</td>
+                <td class="p-4 px-5">${price.toFixed(2)}</td>
+                <td class="p-4 px-5">${quantity}</td>
+                <td class="p-4 px-5">${total.toFixed(2)}</td>
+            </tr>
+        `;
+            billTableBody.innerHTML += billRow;
+        });
+
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+        billModal.classList.remove('hidden');
+    });
+
+    closeBillBtn.addEventListener('click', () => {
+        billModal.classList.add('hidden');
+    });
+
+    confirmBillBtn.addEventListener('click', async () => {
+        const productRows = document.querySelectorAll('#productTableBody tr');
+        const transactionDetails = [];
+
+        productRows.forEach(row => {
+            const productCode = row.cells[0].textContent;
+            const productName = row.cells[1].textContent;
+            const category = row.cells[2].textContent;
+            const price = parseFloat(row.cells[3].textContent);
+            const quantity = parseInt(row.cells[4].textContent);
+
+            transactionDetails.push({
+                productCode,
+                productName,
+                category,
+                price,
+                quantity
+            });
+        });
+
+        try {
+            const response = await fetch('/api/cashier/transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ transactionDetails })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            alert('Bill confirmed and transaction recorded!');
+            billModal.classList.add('hidden');
+            document.getElementById('productTableBody').innerHTML = ''; // Clear the product table
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
 </html>

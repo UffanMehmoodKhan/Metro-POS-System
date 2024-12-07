@@ -1,5 +1,7 @@
 package org.example.metro_pos.Database;
 
+import org.example.metro_pos.Controllers.Cashier.Dashboard.Transaction.CashierTransactionRequest;
+
 import java.sql.*;
 
 // Singleton Class
@@ -140,6 +142,35 @@ public class METRO_DB {
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("data_entry_id") + resultSet.getString("name") +
                         resultSet.getString("password") + resultSet.getString("branch_code"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet findProduct(String productBarCode) {
+        try {
+            // Product ID, NAme, category,salePrice,
+            String query = "SELECT product_barcode, name, category, sale_price, stock_quantity FROM Product WHERE product_barcode = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, productBarCode);
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public void updateProducts(CashierTransactionRequest request) {
+        try {
+            for (CashierTransactionRequest.ProductTransaction product : request.getTransactionDetails()) {
+                String updateStockQuery = "UPDATE Product SET stock_quantity = stock_quantity - ? WHERE product_barcode = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(updateStockQuery)) {
+                    preparedStatement.setInt(1, product.getQuantity());
+                    preparedStatement.setString(2, product.getProductCode());
+                    preparedStatement.executeUpdate();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
