@@ -7,31 +7,27 @@
 //@EntityScan
 //public interface Session {
 //
+//    final static Session entitySession = null;
+//
+//
 //}
 //
 //@Entity
 //class SuperAdmin implements Session{
 //
-//    @Id
-//    private Long id;
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
 //}
 //
+//@Entity
 //class BranchManager implements Session{
 //
 //}
 //
+//@Entity
 //class Cashier implements Session{
 //
 //}
 //
+//@Entity
 //class DataOperator implements Session{
 //
 //}

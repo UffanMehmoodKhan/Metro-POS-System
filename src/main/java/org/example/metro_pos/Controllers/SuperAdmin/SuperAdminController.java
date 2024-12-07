@@ -26,4 +26,15 @@ public class SuperAdminController {
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
 
+    @RequestMapping("/SuperAdminDashboard.html")
+    public ResponseEntity<String> SuperAdminDashboard() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/SuperAdminDashboard.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
+
 }

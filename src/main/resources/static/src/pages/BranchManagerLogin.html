@@ -38,9 +38,52 @@
            
         </section>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.pathname.includes('BranchManagerLogin.html')) {
+                async function login() {
+                    try {
+                        const username = document.getElementById('branchManagerUsername').value;
+                        const password = document.getElementById('branchManagerPassword').value;
 
-    <script src="/src/scripts/route.js"></script>
-    <script src="/src/scripts/navigation.js"></script>
+
+                        console.log('Sending login request with:', { username, password});
+
+                        const response = await fetch('/api/branchManager/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ username, password})
+                        });
+
+                        console.log('Received response:', response);
+
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        const result = await response.json();
+                        console.log('Parsed response JSON:', result);
+
+                        if (result.loginSuccess) {
+                            window.location.href = '/src/pages/BranchManagerDashboard.html';
+                        } else {
+                            alert('Login failed. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Error during login:', error);
+                        alert('An error occurred during login. Please try again.');
+                    }
+                }
+
+                document.getElementById('BranchManagerlgnBtn').addEventListener('click', login);
+            }
+        });
+    </script>
+
+<!--    <script src="/src/scripts/route.js"></script>-->
+<!--    <script src="/src/scripts/navigation.js"></script>-->
 
 
 </body>

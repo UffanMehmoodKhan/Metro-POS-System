@@ -1,4 +1,4 @@
-package org.example.metro_pos.Controllers.Cashier.Login;
+package org.example.metro_pos.Controllers.Cashier;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -26,9 +26,9 @@ public class CashierController {
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
 
-    @RequestMapping("/dummy.html")
-    public ResponseEntity<String> dummy() throws IOException {
-        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/dummy.html");
+    @RequestMapping("/CashierDashboard.html")
+    public ResponseEntity<String> cashierDashboard() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/CashierDashboard.html");
         String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
 
         HttpHeaders headers = new HttpHeaders();
