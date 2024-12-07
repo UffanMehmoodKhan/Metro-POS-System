@@ -61,28 +61,52 @@ if (window.location.pathname.includes('CashierLogin.html')) {
         branchId: '1111'            
     };
 
-    // Handle login form submission
-    const loginButton = document.getElementById('loginBtn'); // Get the login button by id
-    if (loginButton) {
-        loginButton.addEventListener('click', function() {
-            // Get the values from the form fields using their IDs
-            const usernameInput = document.getElementById('cashierUsername').value.trim(); // Email/Username input
-            const passwordInput = document.getElementById('cashierPassword').value.trim(); // Password input
-            const branchIdInput = document.getElementById('cashierBranchId').value.trim(); // Branch-ID input
+    async function login() {
+        const username = document.getElementById('cashierUsername').value;
+        const password = document.getElementById('cashierPassword').value;
+        const branchId = document.getElementById('cashierBranchId').value;
 
-
-            // Check if the entered credentials match the hardcoded cashier credentials
-            if (
-                usernameInput === validCashierCredentials.username &&
-                passwordInput === validCashierCredentials.password &&
-                branchIdInput === validCashierCredentials.branchId
-            ) {
-                window.location.href = routes.cashierDashboard; // Redirect to Cashier Dashboard on successful login
-            } else {
-                alert('Invalid credentials! Please try again.'); // Show error message on invalid credentials
-            }
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, branchId })
         });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.location.href = '/CashierDashboard.html';
+        } else {
+            alert('Invalid credentials! Please try again.');
+        }
     }
+
+    document.getElementById('loginBtn').addEventListener('click', login);
+
+    // Handle login form submission
+    // const loginButton = document.getElementById('loginBtn'); // Get the login button by id
+    // if (loginButton) {
+    //     loginButton.addEventListener('click', function() {
+    //         // Get the values from the form fields using their IDs
+    //         const usernameInput = document.getElementById('cashierUsername').value; // Email/Username input
+    //         const passwordInput = document.getElementById('cashierPassword').value; // Password input
+    //         const branchIdInput = document.getElementById('cashierBranchId').value; // Branch-ID input
+    //
+    //
+    //         // Check if the entered credentials match the hardcoded cashier credentials
+    //         if (
+    //             usernameInput === validCashierCredentials.username &&
+    //             passwordInput === validCashierCredentials.password &&
+    //             branchIdInput === validCashierCredentials.branchId
+    //         ) {
+    //             window.location.href = routes.cashierDashboard; // Redirect to Cashier Dashboard on successful login
+    //         } else {
+    //             alert('Invalid credentials! Please try again.'); // Show error message on invalid credentials
+    //         }
+    //     });
+    // }
 }
 
 // Function for validation of credentials for superAdmin
@@ -103,6 +127,7 @@ if (window.location.pathname.includes('SuperAdminLogin.html')) {
             const passwordInput = document.getElementById('superAdminPassword').value.trim(); // Password input
             const securityCodeInput = document.getElementById('superAdminSecurityCode').value.trim(); // Security Code input
 
+            console.log(usernameInput + " " + passwordInput + " " + securityCodeInput);
           
             // Check if the entered credentials match the hardcoded Super Admin credentials
             if (
@@ -112,7 +137,7 @@ if (window.location.pathname.includes('SuperAdminLogin.html')) {
             ) {
                 window.location.href = routes.superAdminDashboard;
             } else {
-                alert('Invalid credentials! Please try again.'); 
+                alert('Invalid credentials! Please try again.' + usernameInput + " " + passwordInput + " " + securityCodeInput);
             }
         });
     }
