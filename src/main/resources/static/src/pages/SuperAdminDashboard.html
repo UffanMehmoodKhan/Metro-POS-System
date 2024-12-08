@@ -12,18 +12,23 @@
 <!-- Main Container -->
 <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <aside class="w-64 bg-gray-900 text-white flex flex-col justify-between shadow-lg transition-all duration-300">
+    <aside class="w-64 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col justify-between shadow-lg transition-all duration-300">
         <!-- Navigation Links -->
         <div class="p-6">
-            <h2 class="text-lg font-bold mb-6 text-gray-300">Menu</h2>
+            <div class="flex items-center mb-8 space-x-3">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h2 class="text-xl font-bold text-white">CashLytic</h2>
+            </div>
             <nav class="space-y-4">
                 <!-- Navigation Buttons -->
-                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gray-900 hover:bg-gray-700 transition-all duration-300">
+                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gradient-to-r from-gray-900 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300">
                     <img src="https://img.icons8.com/ios-glyphs/20/ffffff/home.png" alt="Dashboard Icon">
                     Dashboard
                 </button>
 
-                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gray-900 hover:bg-gray-700 transition-all duration-300">
+                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gradient-to-r from-gray-900 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300">
                     <img src="https://img.icons8.com/ios-glyphs/20/ffffff/report-card.png" alt="Reports Icon">
                     Reports
                 </button>
@@ -33,7 +38,7 @@
 
         <!-- Logout Button -->
         <div class="p-6 mt-auto">
-            <button id ="SuperAdminlogoutbtn"class="flex items-center gap-4 w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-medium hover:bg-red-700 transition-all duration-300">
+            <button id="SuperAdminlogoutbtn" class="flex items-center gap-4 w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-medium hover:bg-red-700 transition-all duration-300">
                 <img src="https://img.icons8.com/ios-filled/20/ffffff/exit.png" alt="Logout Icon">
                 Logout
             </button>
@@ -42,14 +47,13 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-8 bg-gray-100">
-
-        <header class="mb-8 flex items-center justify-between">
+        <header class="mb-8 flex items-center justify-between bg-white p-6 rounded-lg shadow-md">
             <h1 class="text-3xl font-bold text-gray-800">SuperAdmin Dashboard</h1>
             <!-- Search Bar and Add Branch Button -->
             <div class="flex items-center gap-6">
                 <!-- Search Bar -->
                 <div class="relative w-96">
-                    <input class="w-full border-2 border-gray-300 bg-white h-12 px-5 pr-16 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all duration-300"
+                    <input id="searchBar"  class="w-full border-2 border-gray-300 bg-white h-12 px-5 pr-16 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all duration-300"
                            type="search" name="search" placeholder="Search">
                     <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
                         <svg class="text-gray-600 h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -63,73 +67,127 @@
                 </div>
 
                 <!-- Add Branch Button -->
-                <button id="addBranchBtn" class="flex items-center gap-3 rounded-lg bg-green-600 px-5 py-3 text-sm font-medium text-white hover:bg-green-700 hover:shadow-xl hover:scale-105 transition-all duration-300 transform">
+                <button id="addBranchBtn" class="flex items-center gap-3 rounded-lg bg-gradient-to-r from-green-600 to-green-500 px-5 py-3 text-sm font-medium text-white hover:from-green-700 hover:to-green-600 hover:shadow-xl transition-all duration-300 transform">
                     <img src="https://img.icons8.com/ios-glyphs/20/ffffff/plus-math.png" alt="Add Icon">
                     Add Branch
                 </button>
-
-
             </div>
         </header>
+
         <!-- Branch Cards Container -->
         <div id="branchCardsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-
-
     </main>
+
+
     <!-- Add Branch Modal -->
-    <div id="addBranchModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-lg shadow-2xl p-8 w-full max-w-3xl">
+    <!-- Add Branch Modal -->
+    <div id="addBranchModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center transition-opacity duration-300 ease-in-out">
+        <div class="bg-white rounded-lg shadow-2xl p-10 w-full max-w-3xl transform transition-transform duration-300 ease-in-out scale-95 hover:scale-100">
             <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Add New Branch</h2>
             <form id="addBranchForm" class="space-y-6">
                 <!-- Form Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 gap-8 justify-items-center">
                     <!-- Branch Details -->
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4 text-gray-700">Branch Details</h3>
-                        <div class="space-y-4">
-                            <input type="text" id="branchCode" placeholder="Branch Code" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
-                            <input type="text" id="branchName" placeholder="Branch Name" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
-                            <input type="text" id="branchCity" placeholder="City" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
-                            <input type="text" id="branchAddress" placeholder="Address" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
-                            <input type="tel" id="branchPhone" placeholder="Phone Number" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
-                            <div class="flex items-center">
-                                <label class="mr-4 font-medium text-gray-700">Active:</label>
+                    <div class="w-full max-w-xs"> <!-- Center-align the content of this div -->
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700 text-center">Branch Details</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <input type="text" id="branchName" placeholder="Branch Name" required class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="text" id="branchCity" placeholder="City" required class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="text" id="branchAddress" placeholder="Address" required class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="tel" id="branchPhone" placeholder="Phone Number" required class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div class="flex justify-center items-center mt-4">
+                                <label for="branchActive" class="mr-4 text-gray-700 font-medium">Active:</label>
                                 <input type="checkbox" id="branchActive" class="h-5 w-5 text-green-500 rounded focus:ring-2 focus:ring-green-500">
                             </div>
-                            <input type="number" id="numEmployees" placeholder="Number of Employees" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
-                        </div>
-                    </div>
-                    <!-- Branch Manager Details -->
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4 text-gray-700">Branch Manager Details</h3>
-                        <div class="space-y-4">
-                            <input type="text" id="branchManagerId" placeholder="Branch Manager ID" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="text" id="branchManagerName" placeholder="Manager Name" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="text" id="branchManagerEmpNo" placeholder="Employee Number" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="email" id="branchManagerEmail" placeholder="Email" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="password" id="branchManagerPassword" placeholder="Password" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="text" id="branchManagerBranchCode" placeholder="Branch Code" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="number" id="branchManagerSalary" placeholder="Salary" required class="w-full border rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <div>
+                                <input type="number" id="numEmployees" placeholder="Number of Employees" required class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Modal Buttons -->
-                <div class="flex justify-end space-x-4 mt-6">
-                    <button type="button" id="cancelBranchBtn" class="bg-gray-300 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-400 shadow-md">Cancel</button>
-                    <button type="submit" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 shadow-md">Create Branch</button>
+                <div class="flex justify-center space-x-6 mt-8">
+                    <button type="button" id="cancelBranchBtn" class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-400 shadow-md transition-all duration-200">Cancel</button>
+                    <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 shadow-md transition-all duration-200">Create Branch</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
+
+    <!-- Branch Manager Modal -->
+    <!-- Branch Manager Modal -->
+    <div id="addBranchManagerModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center transition-opacity duration-300 ease-in-out">
+        <div class="bg-white rounded-lg shadow-2xl p-10 w-full max-w-3xl transform transition-transform duration-300 ease-in-out scale-95 hover:scale-100">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Add Branch Manager</h2>
+            <form id="addBranchManagerForm" class="space-y-6">
+                <!-- Form Grid -->
+                <div class="grid grid-cols-1 gap-8 justify-items-center">
+                    <!-- Manager Details -->
+                    <div class="w-full max-w-xs">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700 text-center">Manager Details</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <input type="text" id="branchManagerName" placeholder="Manager Name" required
+                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="email" id="branchManagerEmail" placeholder="Email" required
+                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="password" id="branchManagerPassword" placeholder="Password" required
+                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="text" id="branchManagerBranchCode" placeholder="Branch Code" readonly
+                                       class="w-full border bg-gray-200 rounded-lg px-4 py-3 shadow-sm focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <input type="number" id="branchManagerSalary" placeholder="Salary" required
+                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-md focus:ring-2 focus:ring-green-500 focus:outline-none transition-all duration-300">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Buttons -->
+                <div class="flex justify-center space-x-6 mt-8">
+                    <button type="button" id="cancelBranchManagerBtn"
+                            class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-400 shadow-md transition-all duration-200">Cancel</button>
+                    <button type="submit"
+                            class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 shadow-md transition-all duration-200">Save Manager</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
 
 <script>
 
-
+    // Add Branch and Branch Manager modal logic for superAdmin
     if (window.location.pathname.includes('SuperAdminDashboard.html')) {
 
-        // Check session on page load
+        const addBranchBtn = document.getElementById('addBranchBtn');
+        const addBranchModal = document.getElementById('addBranchModal');
+        const cancelBranchBtn = document.getElementById('cancelBranchBtn');
+        const addBranchForm = document.getElementById('addBranchForm');
+        const branchCardsContainer = document.getElementById('branchCardsContainer');
+
+        // Branch Manager Modal Elements (to be added to HTML)
+        const addBranchManagerModal = document.getElementById('addBranchManagerModal');
+        const cancelBranchManagerBtn = document.getElementById('cancelBranchManagerBtn');
+        const addBranchManagerForm = document.getElementById('addBranchManagerForm');
+
+
         document.addEventListener('DOMContentLoaded', async function() {
             try {
                 const response = await fetch('/api/checkSession');
@@ -141,7 +199,6 @@
                 const sessionData = await response.json();
                 const userRole = sessionData.role;
 
-                // Replace 'requiredRole' with the role you want to check against
                 const requiredRole = 'Admin';
                 if (userRole !== requiredRole) {
                     alert('Unauthorized access. Redirecting to login.');
@@ -158,11 +215,115 @@
             window.location.href = '/LoginTypeScreen.html';
         });
 
-        const addBranchBtn = document.getElementById('addBranchBtn');
-        const addBranchModal = document.getElementById('addBranchModal');
-        const cancelBranchBtn = document.getElementById('cancelBranchBtn');
-        const addBranchForm = document.getElementById('addBranchForm');
-        const branchCardsContainer = document.getElementById('branchCardsContainer');
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadBranches();
+        });
+
+        async function loadBranches() {
+            try {
+                const response = await fetch('/api/admin/getAllBranches', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to load branches');
+                }
+
+                const branches = await response.json();
+                branchCardsContainer.innerHTML = '';
+                branches.forEach(branch => {
+                    createBranchCard(branch);
+                });
+            } catch (error) {
+                console.error('Error loading branches:', error);
+            }
+        }
+
+        function createBranchCard(branchDetails) {
+            const cardHTML = `
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden border transition-transform transform hover:scale-105 hover:shadow-xl">
+            <div class="p-4 bg-gray-900 text-white">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">${branchDetails.branchName}</h2>
+                       <span class="text-sm bg-gray-900 px-2 py-1 rounded">${branchDetails.branchCode}</span>
+                </div>
+            </div>
+            <div class="p-6 space-y-4 bg-gray-900 text-white">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm">Location</p>
+                        <p class="text-lg font-semibold">${branchDetails.city}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm">Employees</p>
+                        <p class="text-2xl font-semibold">${branchDetails.numEmployees}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase mb-1">Branch Status</p>
+                        <div class="flex items-center">
+                            <span class="mr-2 w-3 h-3 rounded-full ${branchDetails.active ? 'bg-green-500' : 'bg-red-500'}"></span>
+                            <span class="text-sm font-medium ${branchDetails.active ? 'text-green-700' : 'text-red-700'}">
+                                ${branchDetails.active ? 'Active' : 'Inactive'}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase mb-1">Contact</p>
+                        <p class="text-sm font-medium text-gray-800">${branchDetails.phone}</p>
+                    </div>
+                </div>
+                <div id="branchManagerDetails-${branchDetails.branchCode}" class="mt-6 pt-4 border-t border-gray-200">
+                    ${branchDetails.managerName ? `
+                        <div class="flex items-center bg-white text-gray-900 p-4 rounded-lg shadow-md">
+                            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-sm">${branchDetails.managerName.charAt(0)}</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">${branchDetails.managerName}</p>
+                                <p class="text-xs opacity-75">${branchDetails.managerEmail}</p>
+                                <p class="text-xs opacity-50">Salary: ${branchDetails.managerSalary}</p>
+                            </div>
+                            <button class="deleteManagerBtn ml-auto bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-all duration-300">
+                                Delete Manager
+                            </button>
+                        </div>
+                    ` : `
+                        <button class="addManagerBtn w-full px-4 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">
+                            Add Branch Manager
+                        </button>
+                    `}
+                </div>
+                <button class="deleteBranchBtn w-full px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                    Delete Branch
+                </button>
+            </div>
+        </div>
+    `;
+
+            const cardElement = document.createElement('div');
+            cardElement.classList.add("w-full", "max-w-sm", "mx-auto", "mb-6");
+            cardElement.innerHTML = cardHTML;
+
+            branchCardsContainer.appendChild(cardElement);
+
+            cardElement.querySelector('.deleteManagerBtn')?.addEventListener('click', async function () {
+                try {
+                    const response = await fetch(`/api/admin/deleteBranchManager/${branchDetails.branchCode}`, { method: 'DELETE' });
+                    if (!response.ok) {
+                        throw new Error('Failed to delete branch manager');
+                    }
+                    await loadBranches();
+                } catch (error) {
+                    console.error('Error deleting branch manager:', error);
+                }
+            });
+        }
 
         // Show modal when Add Branch button is clicked
         addBranchBtn.addEventListener('click', function () {
@@ -178,143 +339,217 @@
         });
 
         // Handle form submission
-        addBranchForm.addEventListener('submit', function (event) {
+        addBranchForm.addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            // Collect Branch Details
+            const branchName = document.getElementById('branchName').value;
+            const branchCity = document.getElementById('branchCity').value;
+            const branchAddress = document.getElementById('branchAddress').value;
+            const branchPhone = document.getElementById('branchPhone').value;
+            const branchActive = document.getElementById('branchActive').checked;
+            const numEmployees = document.getElementById('numEmployees').value;
+
+            // Validate form fields
+            if (!branchName || !branchCity || !branchAddress || !branchPhone || !numEmployees) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
             const branchDetails = {
-                branchCode: document.getElementById('branchCode').value,
-                branchName: document.getElementById('branchName').value,
-                branchCity: document.getElementById('branchCity').value,
-                branchAddress: document.getElementById('branchAddress').value,
-                branchPhone: document.getElementById('branchPhone').value,
-                branchActive: document.getElementById('branchActive').checked,
-                numEmployees: document.getElementById('numEmployees').value
+                branchName: branchName,
+                branchCity: branchCity,
+                branchAddress: branchAddress,
+                branchPhone: branchPhone,
+                branchActive: branchActive,
+                numEmployees: numEmployees
             };
 
-            // Collect Branch Manager Details
-            const branchManagerDetails = {
-                branchManagerId: document.getElementById('branchManagerId').value,
-                branchManagerName: document.getElementById('branchManagerName').value,
-                branchManagerEmpNo: document.getElementById('branchManagerEmpNo').value,
-                branchManagerEmail: document.getElementById('branchManagerEmail').value,
-                branchManagerPassword: document.getElementById('branchManagerPassword').value,
-                branchManagerBranchCode: document.getElementById('branchManagerBranchCode').value,
-                branchManagerSalary: document.getElementById('branchManagerSalary').value
-            };
+            try {
+                const response = await fetch('/api/admin/createBranch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(branchDetails)
+                });
 
-            // Validate inputs (basic validation)
-            if (validateBranchDetails(branchDetails) && validateBranchManagerDetails(branchManagerDetails)) {
-                // Simulate successful branch creation
-                createBranchCard(branchDetails, branchManagerDetails);
+                if (!response.ok) {
+                    throw new Error('Failed to create branch');
+                }
 
-                // Reset and hide modal
+                await loadBranches();
                 addBranchForm.reset();
                 addBranchModal.classList.remove('flex');
                 addBranchModal.classList.add('hidden');
+            } catch (error) {
+                console.error('Error creating branch:', error);
             }
         });
 
-        // Basic validation functions
-        function validateBranchDetails(details) {
-            const requiredFields = ['branchCode', 'branchName', 'branchCity', 'branchAddress', 'branchPhone', 'numEmployees'];
-
-            for (let field of requiredFields) {
-                if (!details[field]) {
-                    alert(`Please fill in all branch details: ${field}`);
-                    return false;
-                }
-            }
-            return true;
+        // Function to open the Branch Manager modal
+        function openBranchManagerModal(branchCode) {
+            const branchManagerBranchCode = document.getElementById('branchManagerBranchCode');
+            branchManagerBranchCode.value = branchCode;
+            addBranchManagerModal.classList.remove('hidden');
+            addBranchManagerModal.classList.add('flex');
         }
 
-        function validateBranchManagerDetails(details) {
-            const requiredFields = [
-                'branchManagerId', 'branchManagerName', 'branchManagerEmpNo',
-                'branchManagerEmail', 'branchManagerPassword',
-                'branchManagerBranchCode', 'branchManagerSalary'
-            ];
-
-            for (let field of requiredFields) {
-                if (!details[field]) {
-                    alert(`Please fill in all branch manager details: ${field}`);
-                    return false;
-                }
-            }
-            return true;
-        }
-
-// Function to create and display a new branch card
-        function createBranchCard(branchDetails, branchManagerDetails) {
+        // Create Branch Card
+        function createBranchCard(branchDetails) {
             const cardHTML = `
-        <div class="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-2 border-white">
-            <div class="p-6 bg-gradient-to-r from-gray-900 to-gray-900 text-white">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold tracking-wide">${branchDetails.branchName}</h2>
-                    <span class="px-3 py-1 bg-white/20 rounded-full text-sm font-semibold">
-                        ${branchDetails.branchCode}
-                    </span>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden border transition-transform transform hover:scale-105 hover:shadow-xl">
+            <div class="p-4 bg-gray-900 text-white">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">${branchDetails.branchName}</h2>
+                    <span class="text-sm bg-gray-900 px-2 py-1 rounded">${branchDetails.branchCode}</span>
                 </div>
-                <div class="flex items-center justify-between">
+            </div>
+            <div class="p-6 space-y-4 bg-gray-900 text-white">
+                <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-sm opacity-80">Location</p>
-                        <p class="font-medium">${branchDetails.branchCity}</p>
+                        <p class="text-sm">Location</p>
+                        <p class="text-lg font-semibold">${branchDetails.city}</p>
                     </div>
-                    <div class="text-right">
-                        <p class="text-sm opacity-80">Employees</p>
-                        <p class="font-bold text-2xl">${branchDetails.numEmployees}</p>
+                    <div>
+                        <p class="text-sm">Employees</p>
+                        <p class="text-2xl font-semibold">${branchDetails.numEmployees}</p>
                     </div>
                 </div>
             </div>
-            <div class="p-6 bg-gray-50">
+            <div class="p-6 space-y-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Branch Status</p>
+                        <p class="text-xs text-gray-500 uppercase mb-1">Branch Status</p>
                         <div class="flex items-center">
-                            <span class="mr-2 w-3 h-3 rounded-full ${branchDetails.branchActive ? 'bg-green-500' : 'bg-red-500'}"></span>
-                            <span class="text-sm font-medium ${branchDetails.branchActive ? 'text-green-700' : 'text-red-700'}">
-                                ${branchDetails.branchActive ? 'Active' : 'Inactive'}
+                            <span class="mr-2 w-3 h-3 rounded-full ${branchDetails.active ? 'bg-green-500' : 'bg-red-500'}"></span>
+                            <span class="text-sm font-medium ${branchDetails.active ? 'text-green-700' : 'text-red-700'}">
+                                ${branchDetails.active ? 'Active' : 'Inactive'}
                             </span>
                         </div>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Contact</p>
-                        <p class="text-sm font-medium text-gray-700">${branchDetails.branchPhone}</p>
+                        <p class="text-xs text-gray-500 uppercase mb-1">Contact</p>
+                        <p class="text-sm font-medium text-gray-800">${branchDetails.phone}</p>
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t border-gray-200">
-                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Branch Manager</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-white font-bold text-sm">
-                                ${branchManagerDetails.branchManagerName.charAt(0)}
-                            </span>
+                <div id="branchManagerDetails-${branchDetails.branchCode}" class="mt-6 pt-4 border-t border-gray-200">
+                    ${branchDetails.managerName ? `
+                        <div class="flex items-center bg-white text-gray-900 p-4 rounded-lg shadow-md">
+                            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-sm">${branchDetails.managerName.charAt(0)}</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">${branchDetails.managerName}</p>
+                                <p class="text-xs opacity-75">${branchDetails.managerEmail}</p>
+                                <p class="text-xs opacity-50">Salary: ${branchDetails.managerSalary}</p>
+                            </div>
+                            <button class="deleteManagerBtn ml-auto bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-all duration-300">
+                                Delete Manager
+                            </button>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-800">${branchManagerDetails.branchManagerName}</p>
-                            <p class="text-xs text-gray-500">${branchManagerDetails.branchManagerEmail}</p>
-                        </div>
-                    </div>
+                    ` : `
+                        <button class="addManagerBtn w-full px-4 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">
+                            Add Branch Manager
+                        </button>
+                    `}
                 </div>
-            </div>
-            <div class="bg-gray-100 p-4 flex justify-end">
-                <button class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-white hover:text-gray-900 transition-colors text-sm">
-                    View Details
+                <button class="deleteBranchBtn w-full px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                    Delete Branch
                 </button>
             </div>
         </div>
     `;
 
             const cardElement = document.createElement('div');
-            cardElement.classList.add("flex", "flex-col");
+            cardElement.classList.add("w-full", "max-w-sm", "mx-auto", "mb-6");
             cardElement.innerHTML = cardHTML;
+
             branchCardsContainer.appendChild(cardElement);
+
+            cardElement.querySelector('.addManagerBtn')?.addEventListener('click', function () {
+                openBranchManagerModal(branchDetails.branchCode);
+            });
+
+            cardElement.querySelector('.deleteBranchBtn').addEventListener('click', async function () {
+                try {
+                    const response = await fetch(`/api/admin/deleteBranch/${branchDetails.branchCode}`, { method: 'DELETE' });
+                    if (!response.ok) {
+                        throw new Error('Failed to delete branch');
+                    }
+                    await loadBranches();
+                } catch (error) {
+                    console.error('Error deleting branch:', error);
+                }
+            });
+
+            cardElement.querySelector('.deleteManagerBtn')?.addEventListener('click', async function () {
+                try {
+                    const response = await fetch(`/api/admin/deleteBranchManager/${branchDetails.branchCode}`, { method: 'DELETE' });
+                    if (!response.ok) {
+                        throw new Error('Failed to delete branch manager');
+                    }
+                    await loadBranches();
+                } catch (error) {
+                    console.error('Error deleting branch manager:', error);
+                }
+            });
         }
+
+        // Hide modal when Cancel button is clicked
+        cancelBranchManagerBtn.addEventListener('click', function () {
+            addBranchManagerModal.classList.remove('flex');
+            addBranchManagerModal.classList.add('hidden');
+            addBranchManagerForm.reset();
+        });
+
+        // Handle Branch Manager form submission
+        // Handle Branch Manager form submission
+        addBranchManagerForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const branchManagerName = document.getElementById('branchManagerName').value;
+            const branchManagerEmail = document.getElementById('branchManagerEmail').value;
+            const branchManagerPassword = document.getElementById('branchManagerPassword').value;
+            const branchManagerBranchCode = document.getElementById('branchManagerBranchCode').value;
+            const branchManagerSalary = document.getElementById('branchManagerSalary').value;
+
+            // Validate form fields
+            if (!branchManagerName || !branchManagerEmail || !branchManagerPassword || !branchManagerBranchCode || !branchManagerSalary) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const branchManagerDetails = {
+                branchManagerName: branchManagerName,
+                branchManagerEmail: branchManagerEmail,
+                branchManagerPassword: branchManagerPassword,
+                branchManagerBranchCode: branchManagerBranchCode,
+                branchManagerSalary: branchManagerSalary
+            };
+
+            try {
+                const response = await fetch('/api/admin/createBranchManager', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(branchManagerDetails)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create branch manager');
+                }
+
+                await loadBranches();
+                addBranchManagerForm.reset();
+                addBranchManagerModal.classList.remove('flex');
+                addBranchManagerModal.classList.add('hidden');
+            } catch (error) {
+                console.error('Error creating branch manager:', error);
+            }
+        });
+
+
     }
+
 </script>
 
-<!--<script src="../scripts/navigation.js"></script>-->
-<!--<script src="../scripts/route.js"></script>-->
 </body>
 
 </html>

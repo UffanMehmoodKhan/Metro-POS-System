@@ -2,35 +2,34 @@ package org.example.metro_pos.Controllers.SuperAdmin.Dashboard.Branch;
 
 public class SuperAdminBranchRequest {
 
-    private String branchCode;
     private String branchName;
-    private String city;
-    private String address;
-    private String phoneNo;
-    private boolean active;
-    private int employeeNum;
+    private String branchCity;
+    private String branchAddress;
+    private String branchPhone;
+    private boolean branchActive;
+    private int numEmployees;
 
     public SuperAdminBranchRequest(){
 
     }
 
-    public SuperAdminBranchRequest(String branchCode, String branchName, String city, String address, String phoneNo, boolean active, int employeeNum) {
-        this.branchCode = branchCode;
+
+    public SuperAdminBranchRequest(String branchCity, String branchAddress, String branchPhone, boolean branchActive) {
+        this.branchCity = branchCity;
+        this.branchAddress = branchAddress;
+        this.branchPhone = branchPhone;
+        this.branchActive = branchActive;
+    }
+
+    public SuperAdminBranchRequest(String branchCode, String branchName, String city, String address, String phone, boolean active, String branchCity, String branchAddress, String branchPhone, boolean branchActive, int numEmployees) {
+        this.branchCity = branchCity;
+        this.branchAddress = branchAddress;
+        this.branchPhone = branchPhone;
+        this.branchActive = branchActive;
         this.branchName = branchName;
-        this.city = city;
-        this.address = address;
-        this.phoneNo = phoneNo;
-        this.active = active;
-        this.employeeNum = employeeNum;
+        this.numEmployees = numEmployees;
     }
 
-    public String getBranchCode() {
-        return branchCode;
-    }
-
-    public void setBranchCode(String branchCode) {
-        this.branchCode = branchCode;
-    }
 
     public String getBranchName() {
         return branchName;
@@ -40,43 +39,49 @@ public class SuperAdminBranchRequest {
         this.branchName = branchName;
     }
 
-    public String getCity() {
-        return city;
+
+    public int getNumEmployees() {
+        return numEmployees;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setNumEmployees(int numEmployees) {
+        this.numEmployees = numEmployees;
     }
 
-    public String getAddress() {
-        return address;
+    @Override
+    public String toString(){
+        return "Branch Name: " + branchName + " Branch City: " + branchCity + " Branch Address: " + branchAddress + " Branch Phone: " + branchPhone + " Branch Active: " + branchActive;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getBranchCity() {
+        return branchCity;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    public void setBranchCity(String branchCity) {
+        this.branchCity = branchCity;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public String getBranchAddress() {
+        return branchAddress;
     }
 
-    public boolean isActive() {
-        return active;
+    public void setBranchAddress(String branchAddress) {
+        this.branchAddress = branchAddress;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public String getBranchPhone() {
+        return branchPhone;
     }
 
-    public int getEmployeeNum() {
-        return employeeNum;
+    public void setBranchPhone(String branchPhone) {
+        this.branchPhone = branchPhone;
     }
 
-    public void setEmployeeNum(int employeeNum) {
-        this.employeeNum = employeeNum;
+    public boolean isBranchActive() {
+        return branchActive;
+    }
+
+    public void setBranchActive(boolean branchActive) {
+        this.branchActive = branchActive;
     }
 }

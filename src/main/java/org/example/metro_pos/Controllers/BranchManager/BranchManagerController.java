@@ -35,4 +35,26 @@ public class BranchManagerController {
 
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
+
+    @RequestMapping("/CashierDetails.html")
+    public ResponseEntity<String> BranchManagerCashierView() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/CashierDetails.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping("/DataEntryOperatorDetails.html")
+    public ResponseEntity<String> BranchManagerDataOperatorView() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/DataEntryOperatorDetails.html.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
 }

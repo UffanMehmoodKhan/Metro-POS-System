@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen p-8">
+    <div class="container mx-auto max-w-6xl bg-white shadow-2xl rounded-xl p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Cashier Details</h1>
+            <button id="addCashierBtn" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md">
+                <i class="fas fa-plus"></i> Add Cashier
+            </button>
+        </div>
+
+        <!-- Add Cashier Form (Hidden initially) -->
+        <div id="addCashierForm" class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 hidden">
+            <h3 class="text-xl font-semibold mb-6 text-gray-700">Add/Edit Cashier</h3>
+            <form id="cashierForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="name" placeholder="Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                    <input type="text" id="emp_no" placeholder="Employee Number" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="email" id="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                    <input type="password" id="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="branch_code" placeholder="Branch Code" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                    <input type="number" id="salary" placeholder="Salary" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <input type="hidden" id="editIndex" value="">
+                <button type="submit" class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 shadow-md">
+                    Save Cashier
+                </button>
+            </form>
+        </div>
+
+        <!-- Table of Cashiers -->
+        <div class="overflow-x-auto mt-8">
+            <table class="w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-4 text-left text-gray-600 font-semibold">ID</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Name</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Emp No</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Email</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Branch Code</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Salary</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cashiersTableBody" class="divide-y divide-gray-200">
+                    <!-- Table rows will be dynamically populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded cashier data (to be replaced with dynamic data from backend later)
+        const cashiers = [
+            { id: 1, name: "John Doe", emp_no: "12345", email: "johndoe@example.com", password: "******", branch_code: "BR001", salary: "$3000" },
+            { id: 2, name: "Jane Smith", emp_no: "67890", email: "janesmith@example.com", password: "******", branch_code: "BR002", salary: "$3200" }
+        ];
+
+        // Function to populate the table dynamically
+        function populateCashiersTable() {
+            const tableBody = document.getElementById("cashiersTableBody");
+            tableBody.innerHTML = ""; // Clear existing table rows
+
+            // Populate the table with cashier data
+            cashiers.forEach((cashier, index) => {
+                const row = document.createElement("tr");
+                row.classList.add("hover:bg-gray-50", "transition-colors");
+
+                row.innerHTML = `
+                    <td class="p-4">${cashier.id}</td>
+                    <td class="p-4">${cashier.name}</td>
+                    <td class="p-4">${cashier.emp_no}</td>
+                    <td class="p-4">${cashier.email}</td>
+                    <td class="p-4">${cashier.branch_code}</td>
+                    <td class="p-4">${cashier.salary}</td>
+                    <td class="p-4 flex gap-2">
+                        <button class="edit-btn px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-all duration-300 flex items-center gap-2">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="remove-btn px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-300 flex items-center gap-2">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Initialize the table with hardcoded data
+        populateCashiersTable();
+
+        // Show and hide the add cashier form
+        document.getElementById("addCashierBtn").addEventListener("click", function () {
+            const form = document.getElementById("addCashierForm");
+            form.classList.toggle("hidden");
+            
+            // Reset form when opening for a new entry
+            if (!form.classList.contains("hidden")) {
+                document.getElementById("cashierForm").reset();
+                document.getElementById("editIndex").value = "";
+            }
+        });
+
+        // Add Cashier to the table on form submission
+        document.getElementById("cashierForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById("name").value;
+            const emp_no = document.getElementById("emp_no").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const branch_code = document.getElementById("branch_code").value;
+            const salary = document.getElementById("salary").value;
+            const editIndex = document.getElementById("editIndex").value;
+
+            if (editIndex === "") {
+                // Add new cashier to the array and refresh the table
+                const newCashier = {
+                    id: cashiers.length + 1,
+                    name,
+                    emp_no,
+                    email,
+                    password,
+                    branch_code,
+                    salary: `$${salary}`
+                };
+                cashiers.push(newCashier);
+            } else {
+                // Edit existing cashier in the array and refresh the table
+                const updatedCashier = {
+                    id: cashiers[editIndex].id,
+                    name,
+                    emp_no,
+                    email,
+                    password,
+                    branch_code,
+                    salary: `$${salary}`
+                };
+                cashiers[editIndex] = updatedCashier;
+            }
+
+            // Clear form and hide it
+            document.getElementById("cashierForm").reset();
+            document.getElementById("addCashierForm").classList.add("hidden");
+
+            // Refresh the table
+            populateCashiersTable();
+        });
+
+        // Edit or Remove cashier
+        document.getElementById("cashiersTableBody").addEventListener("click", function (e) {
+            if (e.target.closest(".edit-btn")) {
+                const rowIndex = Array.from(e.target.closest("tr").parentNode.children).indexOf(e.target.closest("tr"));
+                const cashier = cashiers[rowIndex];
+
+                // Fill form with selected cashier data
+                document.getElementById("name").value = cashier.name;
+                document.getElementById("emp_no").value = cashier.emp_no;
+                document.getElementById("email").value = cashier.email;
+                document.getElementById("password").value = cashier.password;
+                document.getElementById("branch_code").value = cashier.branch_code;
+                document.getElementById("salary").value = cashier.salary.replace('$', '');
+                document.getElementById("editIndex").value = rowIndex;
+
+                // Show form
+                document.getElementById("addCashierForm").classList.remove("hidden");
+            } else if (e.target.closest(".remove-btn")) {
+                const rowIndex = Array.from(e.target.closest("tr").parentNode.children).indexOf(e.target.closest("tr"));
+                cashiers.splice(rowIndex, 1);
+                populateCashiersTable();
+            }
+        });
+    </script>
+</body>
+</html>
