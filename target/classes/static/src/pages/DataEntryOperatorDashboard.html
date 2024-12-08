@@ -1,13 +1,167 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Operator Dashboard Screen</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
 
+<body class="bg-gray-50 text-gray-900">
+<!-- Main Container -->
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col justify-between shadow-lg transition-all duration-300">
+        <!-- Navigation Links -->
+        <div class="p-6">
+<!--            <div class="flex items-center mb-8 space-x-3">-->
+<!--                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">-->
+<!--                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0=0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>-->
+<!--                </svg>-->
+<!--                <h2 class="text-xl font-bold text-white">CashLytic</h2>-->
+<!--            </div>-->
+            <nav class="space-y-4">
+                <!-- Navigation Buttons -->
+                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gradient-to-r from-gray-900 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300">
+                    <img src="https://img.icons8.com/ios-glyphs/20/ffffff/home.png" alt="Dashboard Icon">
+                    Dashboard
+                </button>
+                <button class="flex items-center gap-4 w-full text-left rounded-lg px-4 py-3 text-sm font-medium bg-gradient-to-r from-gray-900 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300">
+                    <img src="https://img.icons8.com/ios-glyphs/20/ffffff/report-card.png" alt="Reports Icon">
+                    View Branch Reports
+                </button>
+            </nav>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="p-6 mt-auto">
+            <button id="SuperAdminlogoutbtn" class="flex items-center gap-4 w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-medium hover:bg-red-700 transition-all duration-300">
+                <img src="https://img.icons8.com/ios-filled/20/ffffff/exit.png" alt="Logout Icon">
+                Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 bg-gray-100">
+        <header class="mb-8 flex items-center justify-between bg-white p-6 rounded-lg shadow-md">
+            <h1 class="text-3xl font-bold text-gray-800">Data Entry Operator Dashboard</h1>
+        </header>
+
+        <div id="branchManagerInfo" class="space-y-6">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-gray-100">
+                <!-- Header Section with Improved Layout -->
+                <div class="p-6 bg-gray-900 text-white">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <!-- User Image -->
+                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Branch Manager" class="w-12 h-12 rounded-full border-2 border-gray-100">
+                            <h2 class="text-xl font-semibold tracking-wider" id="managerName">Username: </h2>
+                        </div>
+                        <span class="text-sm bg-gray-700 px-3 py-1 rounded-full" id="branchId"></span>
+                    </div>
+                </div>
+
+                <!-- Branch Details Section with Enhanced Grid -->
+                <div class="p-6 space-y-4 bg-gray-900 text-white">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-sm mb-1 opacity-70">Branch Name</p>
+                            <p class="text-lg font-semibold" id="branchName"></p>
+                        </div>
+                        <div>
+                            <p class="text-sm mb-1 opacity-70">Branch Location</p>
+                            <p class="text-lg font-semibold" id="branchLocation"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status and Contact Section with Improved Grid -->
+                <div class="p-6 space-y-4">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase mb-1">Branch Status</p>
+                            <p id="branchManagerStatus" class="text-sm font-medium text-green-700"></p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase mb-1">Contact</p>
+                            <p id="branchManagerPhone" class="text-sm font-medium text-gray-800"></p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 mt-4">
+                        <p id="branchManagerNumEmp" class="text-sm font-medium text-gray-800"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Branch Cards Container -->
+        <div id="branchCardsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+
+        <!-- Add buttons for adding employees -->
+        <div id="vendorProbtn" class="mt-6 pt-4 border-t border-gray-200">
+            <button class="w-full px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">
+                Add Products
+            </button>
+            <br>
+            <button id="vendorupdatebtn" class="w-full px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 mt-2 transition-all duration-300 transform hover:scale-105">
+                Update Vendor Table
+            </button>
+        </div>
+    </main>
+</div>
+
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.pathname.includes('DataEntryOperatorDashboard.html')) {
+            async function fetchBranchDetails() {
+                try {
+                    let response = await fetch('/api/dataOperator/branchDetails');
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch branch details');
+                    }
+                    const branchDetails = await response.json();
+
+                    response = await fetch('/api/checkSession');
+                    if (!response.ok) {
+                        window.location.href = '/LoginTypeScreen.html';
+                        return;
+                    }
+
+                    const sessionData = await response.json();
+
+                    document.getElementById('managerName').textContent = `Username: ${sessionData.username}`;
+                    document.getElementById('branchId').textContent = branchDetails.branchCode;
+                    document.getElementById('branchName').textContent = branchDetails.branchName;
+                    document.getElementById('branchLocation').textContent = branchDetails.city;
+                    document.getElementById('branchManagerStatus').textContent = branchDetails.active ? 'Active' : 'Inactive';
+                    document.getElementById('branchManagerPhone').textContent = branchDetails.phone;
+                    document.getElementById('branchManagerNumEmp').textContent = `Number of Employees: ${branchDetails.numEmployees}`;
+                } catch (error) {
+                    console.error('Error fetching branch details:', error);
+                }
+            }
+
+            fetchBranchDetails();
+        }
+    });
+
+    // Handle the redirection for View Cashiers button
+    document.getElementById('vendorProbtn').addEventListener('click', function() {
+        // Redirect to the Cashier details page
+        window.location.href = '/AddProducts.html'; // Adjust the path as needed
+    });
+
+    // Handle the redirection for View Data Entry Operators button
+    document.getElementById('vendorupdatebtn').addEventListener('click', function() {
+        // Redirect to the Data Entry Operator details page
+        window.location.href = '/UpdateVendorTable.html'; // Adjust the path as needed
+    });
+</script>
 </body>
+
 </html>

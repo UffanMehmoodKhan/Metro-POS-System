@@ -35,4 +35,28 @@ public class DataOperatorController {
 
         return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
     }
+
+    @RequestMapping("/AddProducts.html")
+    public ResponseEntity<String> AddProduct() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/AddProducts.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping("/UpdateVendorTable.html")
+    public ResponseEntity<String> updateVendorTable() throws IOException {
+        ClassPathResource loginHTML = new ClassPathResource("static/src/pages/UpdateVendorTable.html");
+        String htmlContent = new String(Files.readAllBytes(loginHTML.getFile().toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_HTML);
+
+        return new ResponseEntity<>(htmlContent, headers, HttpStatus.OK);
+    }
+
+
 }

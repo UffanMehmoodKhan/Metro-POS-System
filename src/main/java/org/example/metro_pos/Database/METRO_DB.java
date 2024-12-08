@@ -2,6 +2,8 @@ package org.example.metro_pos.Database;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.metro_pos.Controllers.Cashier.Dashboard.Transaction.CashierTransactionRequest;
+import org.example.metro_pos.Controllers.DataOperator.Dashboard.DataOperatorBranchResponse;
+import org.example.metro_pos.Controllers.DataOperator.Dashboard.Product;
 import org.example.metro_pos.Controllers.SuperAdmin.Dashboard.Branch.SuperAdminBranchRequest;
 import org.example.metro_pos.Controllers.SuperAdmin.Dashboard.Branch.SuperAdminBranchResponse;
 import org.example.metro_pos.Controllers.SuperAdmin.Dashboard.BranchManager.SuperAdminBranchManagerRequest;
@@ -10,6 +12,7 @@ import org.example.metro_pos.Session.Session;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 // Singleton Class
 public class METRO_DB {
@@ -311,6 +314,110 @@ public class METRO_DB {
             }
         }
         return false;
+    }
+
+    public DataOperatorBranchResponse getBranchDetails(String branchCode) {
+        String query = "SELECT b.branch_code, b.name AS branch_name, b.city, b.address, b.phone, b.num_employees, b.active, bm.name AS branch_manager_name, bm.email AS branch_manager_email, bm.salary AS branch_manager_salary FROM Branch b INNER JOIN BranchManager bm ON b.branch_code = bm.branch_code WHERE b.branch_code = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, branchCode);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new DataOperatorBranchResponse(
+                        resultSet.getString("branch_code"),
+                        resultSet.getString("branch_name"),
+                        resultSet.getString("city"),
+                        resultSet.getString("address"),
+                        resultSet.getString("phone"),
+                        resultSet.getInt("num_employees"),
+                        resultSet.getBoolean("active"),
+                        resultSet.getString("branch_manager_name"),
+                        resultSet.getString("branch_manager_email"),
+                        resultSet.getDouble("branch_manager_salary")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Product> getProductsByBranch(String branchID) {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE branch_code = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, branchID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Product product = new Product(
+                            resultSet.getString("product_barcode"),
+                            resultSet.getString("vendor_id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("category"),
+                            resultSet.getDouble("original_price"),
+                            resultSet.getDouble("sale_price"),
+                            resultSet.getInt("stock_quantity")
+                    );
+                    products.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+
+    public Product addProduct(Product product, String branchID) {
+        String query = "INSERT INTO Product (product_barcode, vendor_id, name, category, original_price, sale_price, stock_quantity, branch_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, product.getBarcode());
+            preparedStatement.setString(2, product.getVendor_id());
+            preparedStatement.setString(3, product.getName());
+            preparedStatement.setString(4, product.getCategory());
+            preparedStatement.setDouble(5, product.getOriginal_price());
+            preparedStatement.setDouble(6, product.getSales_price());
+            preparedStatement.setInt(7, product.getStock_quantity());
+            preparedStatement.setString(8, branchID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+
+    public Product updateProduct(Product product, String branchID) {
+        String query = "UPDATE Product SET vendor_id = ?, name = ?, category = ?, original_price = ?, sale_price = ?, stock_quantity = ? WHERE product_barcode = ? AND branch_code = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, product.getVendor_id());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setString(3, product.getCategory());
+            preparedStatement.setDouble(4, product.getOriginal_price());
+            preparedStatement.setDouble(5, product.getSales_price());
+            preparedStatement.setInt(6, product.getStock_quantity());
+            preparedStatement.setString(7, product.getBarcode());
+            preparedStatement.setString(8, branchID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    public void deleteProduct(String barcode, String branchID) {
+        String query = "DELETE FROM Product WHERE product_barcode = ? AND branch_code = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, barcode);
+            preparedStatement.setString(2, branchID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen p-8">
+    <div class="container mx-auto max-w-6xl bg-white shadow-2xl rounded-xl p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Vendor Details</h1>
+            <button id="addVendorBtn" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md">
+                <i class="fas fa-plus"></i> Add Vendor
+            </button>
+        </div>
+
+        <!-- Add Vendor Form (Hidden initially) -->
+        <div id="addVendorForm" class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 hidden">
+            <h3 class="text-xl font-semibold mb-6 text-gray-700">Add/Edit Vendor</h3>
+            <form id="vendorForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="vendor_id" placeholder="Vendor ID" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                    <input type="text" id="name" placeholder="Vendor Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="contact" placeholder="Contact Number" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                    <input type="email" id="email" placeholder="Email Address" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <textarea id="address" placeholder="Vendor Address" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" required></textarea>
+                </div>
+                <input type="hidden" id="editIndex" value="">
+                <button type="submit" class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 shadow-md">
+                    Save Vendor
+                </button>
+            </form>
+        </div>
+
+        <!-- Table of Vendors -->
+        <div class="overflow-x-auto mt-8">
+            <table class="w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-4 text-left text-gray-600 font-semibold">ID</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Vendor ID</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Name</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Contact</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Email</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Address</th>
+                        <th class="p-4 text-left text-gray-600 font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="vendorsTableBody" class="divide-y divide-gray-200">
+                    <!-- Table rows will be dynamically populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    // Hardcoded vendor data (to be replaced with dynamic data from backend later)
+    const vendors = [
+        { id: 1, vendor_id: "V001", name: "Vendor A", contact: "1234567890", email: "vendorA@example.com", address: "123 Market Street" },
+        { id: 2, vendor_id: "V002", name: "Vendor B", contact: "9876543210", email: "vendorB@example.com", address: "456 Elm Street" }
+    ];
+
+    // Function to populate the table dynamically
+    function populateVendorsTable() {
+        const tableBody = document.getElementById("vendorsTableBody");
+        tableBody.innerHTML = ""; // Clear existing table rows
+
+        // Populate the table with vendor data
+        vendors.forEach((vendor, index) => {
+            const row = document.createElement("tr");
+            row.classList.add("hover:bg-gray-50", "transition-colors");
+
+            row.innerHTML = `
+                <td class="p-4">${vendor.id}</td>
+                <td class="p-4">${vendor.vendor_id}</td>
+                <td class="p-4">${vendor.name}</td>
+                <td class="p-4">${vendor.contact}</td>
+                <td class="p-4">${vendor.email}</td>
+                <td class="p-4">${vendor.address}</td>
+                <td class="p-4 flex gap-2">
+                    <button class="edit-btn px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-all duration-300 flex items-center gap-2">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="remove-btn px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-300 flex items-center gap-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Initialize the table with hardcoded data
+    populateVendorsTable();
+
+    // Show and hide the add vendor form
+    document.getElementById("addVendorBtn").addEventListener("click", function () {
+        const form = document.getElementById("addVendorForm");
+        form.classList.toggle("hidden");
+
+        // Reset form when opening for a new entry
+        if (!form.classList.contains("hidden")) {
+            document.getElementById("vendorForm").reset();
+            document.getElementById("editIndex").value = "";
+        }
+    });
+
+    // Add Vendor to the table on form submission
+    document.getElementById("vendorForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Get form values
+        const vendor_id = document.getElementById("vendor_id").value.trim();
+        const name = document.getElementById("name").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const editIndex = document.getElementById("editIndex").value;
+
+        // Validate inputs
+        if (!vendor_id || !name || !contact || !email || !address) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Input',
+                text: 'All fields are required!'
+            });
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email',
+                text: 'Please enter a valid email address!'
+            });
+            return;
+        }
+
+        if (!/^\d{11}$/.test(contact)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Contact',
+                text: 'Contact number must be 10 digits!'
+            });
+            return;
+        }
+
+        if (editIndex === "") {
+            // Add new vendor to the array
+            const newVendor = {
+                id: vendors.length + 1,
+                vendor_id,
+                name,
+                contact,
+                email,
+                address
+            };
+            vendors.push(newVendor);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Vendor Added',
+                text: 'Vendor added successfully!'
+            });
+        } else {
+            // Edit existing vendor
+            vendors[editIndex] = {
+                id: vendors[editIndex].id,
+                vendor_id,
+                name,
+                contact,
+                email,
+                address
+            };
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Vendor Updated',
+                text: 'Vendor details updated successfully!'
+            });
+        }
+
+        // Clear form and hide it
+        document.getElementById("vendorForm").reset();
+        document.getElementById("addVendorForm").classList.add("hidden");
+
+        // Refresh the table
+        populateVendorsTable();
+    });
+
+    // Edit or Remove vendor
+    document.getElementById("vendorsTableBody").addEventListener("click", function (e) {
+        if (e.target.closest(".edit-btn")) {
+            const rowIndex = Array.from(e.target.closest("tr").parentNode.children).indexOf(e.target.closest("tr"));
+            const vendor = vendors[rowIndex];
+
+            // Fill form with selected vendor data
+            document.getElementById("vendor_id").value = vendor.vendor_id;
+            document.getElementById("name").value = vendor.name;
+            document.getElementById("contact").value = vendor.contact;
+            document.getElementById("email").value = vendor.email;
+            document.getElementById("address").value = vendor.address;
+            document.getElementById("editIndex").value = rowIndex;
+
+            // Show form
+            document.getElementById("addVendorForm").classList.remove("hidden");
+        } else if (e.target.closest(".remove-btn")) {
+            const rowIndex = Array.from(e.target.closest("tr").parentNode.children).indexOf(e.target.closest("tr"));
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    vendors.splice(rowIndex, 1);
+                    populateVendorsTable();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Vendor has been removed.'
+                    });
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
