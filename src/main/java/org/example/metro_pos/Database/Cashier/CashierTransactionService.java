@@ -1,5 +1,6 @@
 package org.example.metro_pos.Database.Cashier;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.metro_pos.Controllers.Cashier.Dashboard.Transaction.CashierTransactionRequest;
 
 import org.example.metro_pos.Controllers.Cashier.Dashboard.Transaction.ExcelService;
@@ -17,13 +18,13 @@ public class CashierTransactionService {
 
     METRO_DB cashier_DB;
 
-    public void recordTransaction(CashierTransactionRequest request) {
+    public void recordTransaction(CashierTransactionRequest request, HttpSession session) {
         cashier_DB = METRO_DB.getInstance();
-        cashier_DB.updateProducts(request);
+        cashier_DB.updateProducts(request, session);
 
         // Write transactions to Excel
         try {
-            excelService.writeTransactionsToExcel(request.getTransactionDetails());
+            excelService.writeTransactionsToExcel(request.getTransactionDetails(), session);
         } catch (IOException e) {
             e.printStackTrace();
         }

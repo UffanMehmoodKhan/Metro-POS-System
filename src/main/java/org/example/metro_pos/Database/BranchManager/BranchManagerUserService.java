@@ -8,10 +8,10 @@ public class BranchManagerUserService {
 
     METRO_DB branchManager_DB;
 
-    public boolean validateUser(String username, String password) {
+    public boolean validateUser(String username, String password, String branchID) {
         branchManager_DB = METRO_DB.getInstance();
-        System.out.println("Validating user with username: " + username + ", password: " + password);
-        boolean isValid = branchManager_DB.validateBranchManager(username, password);
+        System.out.println("Validating user with username: " + username + ", password: " + password + ", branchID: " + branchID);
+        boolean isValid = branchManager_DB.validateBranchManager(username, password, branchID);
         System.out.println("Validation result: " + isValid);
         return isValid;
     }

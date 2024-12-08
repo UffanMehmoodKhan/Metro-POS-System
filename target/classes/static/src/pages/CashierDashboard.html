@@ -157,8 +157,17 @@
 </div>
 
 <script>
+    // Check session on page load
+    document.addEventListener('DOMContentLoaded', async function() {
+        const response = await fetch('/api/checkSession');
+        if (!response.ok) {
+            window.location.href = '/LoginTypeScreen.html';
+        }
+    });
+
     // Logout button
-    document.getElementById('SuperAdminlogoutbtn').addEventListener('click', () => {
+    document.getElementById('SuperAdminlogoutbtn').addEventListener('click', async function() {
+        await fetch('/api/cashier/logout', { method: 'POST' });
         window.location.href = '/LoginTypeScreen.html';
     });
 

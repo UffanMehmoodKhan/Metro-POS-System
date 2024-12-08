@@ -125,7 +125,23 @@
 </div>
 
 <script>
+
+
     if (window.location.pathname.includes('SuperAdminDashboard.html')) {
+
+        // Check session on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            const response = await fetch('/api/checkSession');
+            if (!response.ok) {
+                window.location.href = '/LoginTypeScreen.html';
+            }
+        });
+
+        document.getElementById('SuperAdminlogoutbtn').addEventListener('click', async function() {
+            await fetch('/api/admin/logout', { method: 'POST' });
+            window.location.href = '/LoginTypeScreen.html';
+        });
+
         const addBranchBtn = document.getElementById('addBranchBtn');
         const addBranchModal = document.getElementById('addBranchModal');
         const cancelBranchBtn = document.getElementById('cancelBranchBtn');

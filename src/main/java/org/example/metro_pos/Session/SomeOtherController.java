@@ -1,5 +1,7 @@
 package org.example.metro_pos.Session;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +12,24 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/api")
 public class SomeOtherController {
 
-    @GetMapping("/someEndpoint")
-    public String someEndpoint(HttpSession session) {
+    @GetMapping("/checkSession")
+    public ResponseEntity<Void> checkSession(HttpSession session) {
+        if (session != null && session.getAttribute("userSession") != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @RequestMapping("/viewSession")
+    public String viewSession(HttpSession session) {
         Session userSession = (Session) session.getAttribute("userSession");
         if (userSession != null) {
-            // Use the session information
-            return "User: " + userSession.getUsername() + ", Password: " + userSession.getPassword() + " " + userSession.getBranchID();
+            return "User: " + userSession.getUsername() + "Password: " + userSession.getPassword() +
+                    "BranchID: " + userSession.getBranchID() + "Role: " + userSession.getRole();
         } else {
             return "No user session found";
         }
     }
+
 }

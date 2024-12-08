@@ -1,7 +1,9 @@
 package org.example.metro_pos.Controllers.Cashier.Dashboard.Transaction;
 
+import jakarta.servlet.http.HttpSession;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.example.metro_pos.Session.Session;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -17,9 +19,14 @@ public class ExcelService {
     private static final String FILE_PATH = "transactions_";
     private static final String FILE_EXTENSION = ".xlsx";
 
-    public void writeTransactionsToExcel(List<CashierTransactionRequest.ProductTransaction> transactions) throws IOException {
+    public void writeTransactionsToExcel(List<CashierTransactionRequest.ProductTransaction> transactions, HttpSession session) throws IOException {
         String currentDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        String filePath = FILE_PATH + currentDate + FILE_EXTENSION;
+        Session userSession = (Session) session.getAttribute("userSession");
+        String branchID = userSession.getBranchID();
+        if (branchID == null) {
+            throw new IllegalStateException("Branch ID not found in session");
+        }
+        String filePath = FILE_PATH + currentDate + "_branch_" + branchID + FILE_EXTENSION;
 
         Workbook workbook;
         Sheet sheet;

@@ -1,6 +1,8 @@
 package org.example.metro_pos.Database;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.metro_pos.Controllers.Cashier.Dashboard.Transaction.CashierTransactionRequest;
+import org.example.metro_pos.Session.Session;
 
 import java.sql.*;
 
@@ -67,12 +69,13 @@ public class METRO_DB {
     }
 
     // Validate Branch Manager Login
-    public boolean validateBranchManager(String username, String password) {
+    public boolean validateBranchManager(String username, String password, String branchID) {
         try {
-            String query = "SELECT * FROM BranchManager WHERE name = ? AND password = ?";
+            String query = "SELECT * FROM BranchManager WHERE name = ? AND password = ? AND branch_code = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
+            preparedStatement.setInt(3, Integer.parseInt(branchID));
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
@@ -148,12 +151,15 @@ public class METRO_DB {
         }
     }
 
-    public ResultSet findProduct(String productBarCode) {
+    public ResultSet findProduct(String productBarCode, HttpSession session) {
+        Session userSession = (Session) session.getAttribute("userSession");
+        String branchID = userSession.getBranchID();
         try {
             // Product ID, NAme, category,salePrice,
-            String query = "SELECT product_barcode, name, category, sale_price, stock_quantity FROM Product WHERE product_barcode = ?";
+            String query = "SELECT product_barcode, name, category, sale_price, stock_quantity FROM Product WHERE product_barcode = ? AND branch_code = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productBarCode);
+            preparedStatement.setString(2, branchID);
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,13 +168,16 @@ public class METRO_DB {
         return null;
     }
 
-    public void updateProducts(CashierTransactionRequest request) {
+    public void updateProducts(CashierTransactionRequest request, HttpSession session) {
+        Session userSession = (Session) session.getAttribute("userSession");
+        String branchID = userSession.getBranchID();
         try {
             for (CashierTransactionRequest.ProductTransaction product : request.getTransactionDetails()) {
-                String updateStockQuery = "UPDATE Product SET stock_quantity = stock_quantity - ? WHERE product_barcode = ?";
+                String updateStockQuery = "UPDATE Product SET stock_quantity = stock_quantity - ? WHERE product_barcode = ? AND branch_code = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(updateStockQuery)) {
                     preparedStatement.setInt(1, product.getQuantity());
                     preparedStatement.setString(2, product.getProductCode());
+                    preparedStatement.setString(3, branchID);
                     preparedStatement.executeUpdate();
                 }
             }

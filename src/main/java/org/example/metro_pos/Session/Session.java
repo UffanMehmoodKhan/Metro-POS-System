@@ -1,13 +1,13 @@
 package org.example.metro_pos.Session;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.io.Serializable;
 
 @EntityScan
 public class Session implements Serializable {
+
+    private static final long serialVersionUID = 6626553478563825579L;
 
     private String username;
     private String password;
@@ -17,7 +17,7 @@ public class Session implements Serializable {
     public Session() {
     }
 
-    public Session(String username, String password, String branchID) {
+    public Session(String username, String password, String branchID, String role) {
         this.username = username;
         this.password = password;
         this.branchID = branchID;

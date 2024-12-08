@@ -15,7 +15,7 @@ public class BranchManagerLoginResponse {
 
     @Override
     public String toString() {
-        return "SuperAdminLoginResponse{" +
+        return "BranchManagerLoginResponse{" +
                 "loginSuccess=" + loginSuccess +
                 '}';
     }
