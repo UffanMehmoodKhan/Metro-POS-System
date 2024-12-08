@@ -131,8 +131,24 @@
 
         // Check session on page load
         document.addEventListener('DOMContentLoaded', async function() {
-            const response = await fetch('/api/checkSession');
-            if (!response.ok) {
+            try {
+                const response = await fetch('/api/checkSession');
+                if (!response.ok) {
+                    window.location.href = '/LoginTypeScreen.html';
+                    return;
+                }
+
+                const sessionData = await response.json();
+                const userRole = sessionData.role;
+
+                // Replace 'requiredRole' with the role you want to check against
+                const requiredRole = 'Admin';
+                if (userRole !== requiredRole) {
+                    alert('Unauthorized access. Redirecting to login.');
+                    window.location.href = '/LoginTypeScreen.html';
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
                 window.location.href = '/LoginTypeScreen.html';
             }
         });

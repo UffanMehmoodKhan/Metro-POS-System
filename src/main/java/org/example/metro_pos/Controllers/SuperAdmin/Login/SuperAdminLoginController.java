@@ -3,6 +3,7 @@ package org.example.metro_pos.Controllers.SuperAdmin.Login;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.metro_pos.Database.SuperAdmin.SuperAdminUserService;
+import org.example.metro_pos.Session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +20,15 @@ public class SuperAdminLoginController {
     private SuperAdminUserService userService;
 
     @PostMapping("/login")
-    public SuperAdminLoginResponse login(@RequestBody SuperAdminLoginRequest request) {
+    public SuperAdminLoginResponse login(@RequestBody SuperAdminLoginRequest request, HttpSession session) {
         System.out.println("Received login request: " + request);
         boolean isValid = userService.validateUser(request.getUsername(), request.getPassword(), request.getSecurityCode());
         System.out.println("Sending login response: " + isValid);
+        if(isValid){
+            // Store User Session
+            Session userSession = new Session(request.getUsername(), request.getPassword(), "OMNI", "Admin");
+            session.setAttribute("userSession", userSession);
+        }
         return new SuperAdminLoginResponse(isValid);
     }
 

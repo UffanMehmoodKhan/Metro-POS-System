@@ -26,7 +26,8 @@ public class BranchManagerLoginController {
         boolean isValid = userService.validateUser(request.getUsername(), request.getPassword(), request.getBranchID());
         if(isValid){
             // Store User Session
-            Session userSession = new Session(request.getUsername(), request.getPassword(), request.getBranchID(), "Branch Manager");
+            Session userSession = new Session(request.getUsername(), request.getPassword(),
+                    request.getBranchID(), "Branch Manager");
             session.setAttribute("userSession", userSession);
         }
         System.out.println("Sending login response: " + isValid);

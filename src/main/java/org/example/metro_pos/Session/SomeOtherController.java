@@ -13,9 +13,10 @@ import jakarta.servlet.http.HttpSession;
 public class SomeOtherController {
 
     @GetMapping("/checkSession")
-    public ResponseEntity<Void> checkSession(HttpSession session) {
+    public ResponseEntity<Session> checkSession(HttpSession session) {
         if (session != null && session.getAttribute("userSession") != null) {
-            return ResponseEntity.ok().build();
+            Session userSession = (Session) session.getAttribute("userSession");
+            return ResponseEntity.ok(userSession);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -25,11 +26,10 @@ public class SomeOtherController {
     public String viewSession(HttpSession session) {
         Session userSession = (Session) session.getAttribute("userSession");
         if (userSession != null) {
-            return "User: " + userSession.getUsername() + "Password: " + userSession.getPassword() +
-                    "BranchID: " + userSession.getBranchID() + "Role: " + userSession.getRole();
+            return "User: " + userSession.getUsername() + " Password: " + userSession.getPassword() +
+                    " BranchID: " + userSession.getBranchID() + " Role: " + userSession.getRole();
         } else {
             return "No user session found";
         }
     }
-
 }
